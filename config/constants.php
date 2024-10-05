@@ -6,7 +6,7 @@ session_start();
 define('SITEURL', 'https://okhascorpio.freewebhostmost.com/');
 define('LOCALHOAST', 'server6.webhostmost.com');
 define('DB_USERNAME','ciqpzpwr_okhascorpio');
-define('DB_PASSWORD','');
+define('DB_PASSWORD','aaa');
 define('DB_NAME','ciqpzpwr_okhascorpio');
 //connect to DB
 $conn = mysqli_connect(LOCALHOAST, DB_USERNAME, DB_PASSWORD) or die(mysqli_error());
