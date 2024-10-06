@@ -1,8 +1,8 @@
-<?php include('../config/constants.php')?>
+<?php include('../config/constants.php');?>
 <html>
     <head>
         <title>Food Order Website Homepage</title>
-        <link rel="stylesheet" href="../css/admin4.css">
+        <link rel="stylesheet" href="../css/admin.css">
     </head>
 
     <body>

@@ -54,13 +54,13 @@
         $res = mysqli_query($conn, $sql) or die(mysqli_error());  
         if($res==TRUE)
         {
-            $_SESSION['add'] = "Admin Added Successfully";
+            $_SESSION['message'] = "<p class='success'>Admin Added Successfully.</p>";
             // Redirect to manage admin page
             header("location:".SITEURL.'admin/manage-admin.php');
         }
         else
         {
-            $_SESSION['add'] = "Failed to Add Admin";
+            $_SESSION['message'] = "<p class='error'>Failed to Add Admin.</p>";
             // Redirect to manage admin page
             header("location:".SITEURL.'admin/add-admin.php');
         }
