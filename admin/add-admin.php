@@ -42,16 +42,26 @@
     {
         $full_name = $_POST['full_name'];
         $username = $_POST['username'];
-        $password = md5($_POST['password']);
-
+        $passhash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        /*
         $sql = "INSERT INTO tbl_admin SET 
             full_name='$full_name',
             username='$username',
             password='$password'
             ";
-            
-        
-        $res = mysqli_query($conn, $sql) or die(mysqli_error());  
+        */    
+        // Prepare the SQL statement
+        $stmt = $conn->prepare("INSERT INTO tbl_admin SET full_name = ?, username = ?, password = ?");
+        // Check if the statement was prepared successfully
+        if ($stmt === false) 
+        {
+            die('Prepare failed: ' . htmlspecialchars($conn->error));
+        }
+        // Bind the parameters
+        $stmt->bind_param("sss", $full_name, $username, $passhash,); // "sss" indicates that all parameters are strings
+        // Execute the statement
+        $res = $stmt->execute();  
+          
         if($res==TRUE)
         {
             $_SESSION['message'] = "<p class='success'>Admin Added Successfully.</p>";
