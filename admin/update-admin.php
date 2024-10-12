@@ -20,7 +20,8 @@ if ($res->num_rows === 1)
         $full_name = "";
         $username = "";
         // Redirect to manage admin page
-        //header("location:".SITEURL.'admin/update-admin.php');
+        header("location:".SITEURL.'admin/manage-admin.php');
+        exit();
     }
 
 ?>

@@ -4,10 +4,10 @@
             <h1>Add Admin</h1>
                     <br />
                     <?php 
-                        if(isset($_SESSION['add']))
+                        if(isset($_SESSION['message']))
                         {
-                            echo $_SESSION['add'];
-                            unset($_SESSION['add']);
+                            echo $_SESSION['message'];
+                            unset($_SESSION['message']);
                         }
                     ?>
                     <br /><br />

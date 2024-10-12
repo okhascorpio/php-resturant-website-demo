@@ -11,13 +11,14 @@ if ($res->num_rows === 1)
         $row = $res->fetch_assoc();
         $full_name = $row['full_name'];
         $username = $row['username'];
-        $_SESSION['message'] = "<p class='success'>Change Password For<br \>User: " . htmlspecialchars($username) . "<br \>Full Name: " . htmlspecialchars($full_name) . ".</p>";
-        // Redirect to manage admin page
-        //header("location:".SITEURL.'admin/update-admin.php');
+        $_SESSION['message'] = "<p>Change Password For<br \>User: " . htmlspecialchars($username) . "<br \>Full Name: " . htmlspecialchars($full_name) . ".</p>";
+
     } else {
-        $_SESSION['message'] = "<p class='error'>Failed to Retrive Admin.</p>";
+        // if no admin found
+        $_SESSION['message'] = "<p class='error'>Admin Not Found.</p>";
         // Redirect to manage admin page
-        //header("location:".SITEURL.'admin/update-admin.php');
+        header("location:".SITEURL.'admin/manage-admin.php');
+        exit();
     }
 
 ?>
@@ -38,7 +39,7 @@ if ($res->num_rows === 1)
                 <table class="tbl-30">
                     <tr>
                         <td>New Password: </td>
-                        <td><input type="text" name="username" placeholder="Enter New Password"></td>
+                        <td><input id="newPass" type="text" name="password" placeholder="Enter New Password"></td>
                     </tr>
                     <tr>
                         <td colspan="2"><input type="submit" name="submit" value="Update Password" class="btn-secondary"></input> </td>
@@ -54,9 +55,8 @@ if ($res->num_rows === 1)
 // Process form data
     if(isset($_POST['submit']))
     {
-        //$id = $_POST['id'];    
-        $password = md5($_POST['password']);
-
+            
+        $passhash = password_hash($_POST['password'], PASSWORD_DEFAULT);
         // Prepare the SQL statement
         $stmt = $conn->prepare("UPDATE tbl_admin SET password = ? WHERE id = ?");
 
@@ -67,20 +67,20 @@ if ($res->num_rows === 1)
         }
 
         // Bind the parameters
-        $stmt->bind_param("ssi", $full_name, $username, $id); // "ssi" indicates that both parameters are strings
-
+        $stmt->bind_param("si", $passhash, $id); // "si" indicates that both parameters are strings
+        // to verify password password_verify($password, $hashedPassword) == true
         // Execute the statement
         $res = $stmt->execute();  
 
         if($res == true)
         {
-            $_SESSION['message'] = "<p class='success'>Admin Updated Successfully.</p>";
+            $_SESSION['message'] = "<p class='success'>Admin Password Updated Successfully.</p>";
             // Redirect to manage admin page
             header("location:".SITEURL.'admin/manage-admin.php');
         }
         else
         {
-            $_SESSION['message'] = "<p class='error'>Failed to Update Admin.</p>";
+            $_SESSION['message'] = "<p class='error'>Failed to Update Admin Password.</p>";
             // Redirect to manage admin page
             header("location:".SITEURL.'admin/manage-admin.php');
         }
